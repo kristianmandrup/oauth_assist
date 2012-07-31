@@ -88,6 +88,15 @@ Bote: You can pass a path argument to `#certificates` to override the default lo
 
 The gem now takes the form of an engine and includes a basic signup view in both `ERB` and `HAML` formats. You can use this view as a base to suit your own needs.
 
+## Session config
+
+The `OauthAssist::Session#config` class method, can be used to return a hash to configure the session.
+
+```ruby
+# config/initializers/session_store.rb
+
+MyApp::Application.config.session = OauthAssist::Session.config
+```
 
 ## Assets
 

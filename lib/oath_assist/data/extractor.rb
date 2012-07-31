@@ -75,8 +75,12 @@ Please register an extractor class using the OauthAssist::Data::Extractor#regist
         protected
 
         def user_data_entry
-          omniauth['extra']['user_hash']
+          info_entry
         end    
+
+        def info_entry
+          omniauth['extra']['raw_info']
+        end
       end
 
       class Github < Base
@@ -89,7 +93,7 @@ Please register an extractor class using the OauthAssist::Data::Extractor#regist
         end
 
         def id_value
-          omniauth['extra']['user_hash']['id']
+          info_entry['id']
         end
 
         def extract
@@ -104,7 +108,7 @@ Please register an extractor class using the OauthAssist::Data::Extractor#regist
         end
 
         def user_data_entry
-          omniauth['user_info']['user_hash']
+          omniauth['info']['user_hash']
         end    
       end
 
@@ -136,8 +140,8 @@ Please register an extractor class using the OauthAssist::Data::Extractor#regist
           [:email, :name]
         end
 
-        def user_data_entry
-          omniauth['user_info']
+        def info_entry
+          omniauth['info']
         end
       end
     end
