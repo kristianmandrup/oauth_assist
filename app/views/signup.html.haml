@@ -1,0 +1,32 @@
+%section#services_new.services
+  %h1
+    = t 'auth.account.new'
+    .new_account
+      %h3
+        = t 'auth.account.new_for_app'
+        %p.small
+            Provider:
+            = @authhash[:provider]
+            %br
+            ID:
+            = @authhash[:uid]
+            %br
+            Name:
+            = @authhash[:name]
+            %br
+            Email:
+            = @authhash[:email]
+            %br
+        = form_tag :controller => "services", :action => "newaccount" do
+          = submit_tag "Confirm and create new account" 
+          = submit_tag "Cancel"
+    %p
+      = t 'auth.account.notice_already'
+      = t 'auth.account.not_logged_in'
+
+    %p.small.nomargin
+      = t 'auth.account.associate_other'
+    %ul.small
+      = 3.times do |n|
+        %li
+          = t('auth.account.associate_how')[n]

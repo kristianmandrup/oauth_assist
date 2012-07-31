@@ -1,0 +1,26 @@
+en:
+  oauth:
+    error:
+      must_sign_in: You need to sign in before accessing this page!
+      auth_service_error: There was an error at the remote authentication service. You have not been signed in.
+      cant_delete_current_account: You are currently signed in with this account!
+      user_save_error: This is embarrassing! There was an error while creating your account from which we were not able to recover.
+      auth_error: "Error while authenticating via %{service_name}. The service did not return valid data."
+      auth_invalid: "Error while authenticating via %{full_route}. The service returned invalid data for the user id."
+    notice:
+      already_connected provider_name: "Your account at %{provider_name} is already connected with this site."
+      account_added: "Your %{provider_name} account has been added for signing in at this site."
+      signed_in: Your account has been created and you have been signed in!
+      sign_in_success: "Signed in successfully via %{provider_name}."
+      signed_out: You have been signed out!
+  auth:
+    account:
+      new: New Account
+      new_for_app: "This authentication is new to %{app_name}"
+      notice_already: "If you think you already have an %{app_name} account, and you were just trying to associate a new authentication with your existing account, then you’re in the wrong place."
+      not_logged_in: "You’re not logged into %{app_name} right now."
+      associate_other: "If you have a %{app_name} account, and you’d like to associate another authentication with it, here’s what to do:"
+      associate_other_how:
+        - "Log in in to %{app_name} with your existing authentication service"
+        - "Go to your authentitication services settings page (located at the top/right corner of the page)"
+        - "Add one or more accounts to be used to sign-in"

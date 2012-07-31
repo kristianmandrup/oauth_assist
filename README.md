@@ -38,6 +38,10 @@ class ServicesController < ApplicationController
 end
 ```
 
+Note: A locale file called `oauth_assist_en.yml` is included in the config folder of this gem.
+
+There is also a `OauthAssist::Controller::UserHelper` that can fx be included into `ApplicationController.
+
 ## Custom OAuth Data extraction
 
 You can register custom OAuth Data extractors via:
@@ -72,9 +76,15 @@ provider_builder = OauthAssist::Provider::Builder.new my_providers
 provider_builder.configure_providers
 ```
 
+## View helpers and localization
+
+The gem now takes the form of an engine and includes a basic signup view in both `ERB` and `HAML` formats. You can use this view as a base to suit your own needs.
+
 ## Important notice
 
-This gem has not yet been thoroughly tested. Please help out by trying it out and patching it where necessary... Thanks!
+This gem has not yet been tested and currently has no specs (test cases). Please help out by trying it out and patching it where necessary... and submit some nice specs!
+
+Thanks!
 
 ## Contributing to oath_assist
  
