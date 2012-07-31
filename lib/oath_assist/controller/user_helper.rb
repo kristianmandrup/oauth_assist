@@ -13,6 +13,6 @@ module OauthAssist::Controller
         msg.must_sign_in!
         redirect_to signin_services_path
       end
-    end  
+    end 
   end
 end

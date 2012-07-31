@@ -1,5 +1,6 @@
 en:
   oauth:
+    remove_auth_confirm: Are you sure you want to remove this authentication?
     error:
       must_sign_in: You need to sign in before accessing this page!
       auth_service_error: There was an error at the remote authentication service. You have not been signed in.

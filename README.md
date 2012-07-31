@@ -40,7 +40,7 @@ end
 
 Note: A locale file called `oauth_assist_en.yml` is included in the config folder of this gem.
 
-There is also a `OauthAssist::Controller::UserHelper` that can fx be included into `ApplicationController.
+There is also a `OauthAssist::Controller::UserHelper` that can fx be included into `ApplicationController. The `OauthAssist::View::Helper` can be used in a similar fashion (used in `views/services/_list.html.haml`).
 
 ## Custom OAuth Data extraction
 

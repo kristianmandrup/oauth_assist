@@ -1,0 +1,10 @@
+@services.each do |service|
+  .service_in_use.round
+    .service_img
+      = service_image service
+    .service_userdata
+      = display_service_adr service
+      %br
+      = display_service_value :uname
+      = display_service_value :uemail
+      = session[:service_id] == service.id ? 'Signed in' : remove_service_link(service)
