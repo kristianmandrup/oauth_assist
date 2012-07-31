@@ -1,0 +1,8 @@
+google:
+  identifier: https://www.google.com/accounts/o8/id
+yahoo:
+  identifier: yahoo.com
+aol:
+  identifier: openid.aol.com
+myopenid:
+  identifier: myopenid.com

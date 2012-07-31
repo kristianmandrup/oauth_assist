@@ -17,8 +17,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "oath_assist"
   gem.homepage = "http://github.com/kristianmandrup/oath_assist"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Various helper modules for setting up Oauth with multiple service providers}
+  gem.description = %Q{Based on the code in http://www.communityguides.eu/articles/16 but heavily refactored}
   gem.email = "kmandrup@gmail.com"
   gem.authors = ["Kristian Mandrup"]
   # dependencies defined in Gemfile

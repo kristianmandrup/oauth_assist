@@ -1,0 +1,31 @@
+facebook:
+  app_id:
+  app_secret:
+twitter:
+  consumer_key:
+  consumer_secret:
+github:
+  client_id:
+  secret:
+google:
+  client_id: 
+  client_secret: 
+  # redirect:
+instagram:
+  instagram_id:
+  instagram_secret:
+linkedin:
+  consumer_key:
+  consumer_secret:
+podio:
+  client_id: 
+  client_secret:
+37signals:
+  37_signals_client_id:
+  37_signals_secret:
+youtube:
+  youtube_key:
+  youtube_secret:
+xing:
+  consumer_key:
+  consumer_secret:
