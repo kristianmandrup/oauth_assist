@@ -19,6 +19,11 @@ module OauthAssist
         OauthAssist::Provider::Loader.instance
       end
 
+      def certificates cert_path = "ca-bundle.crt"
+        require "openid/fetchers"
+        OpenID.fetcher.ca_file = "#{Rails.root}/config/#{cert_path}"
+      end
+
       def configure_providers
         Rails.application.config.middleware.use OmniAuth::Builder do
           configure_providers providers if providers

@@ -73,12 +73,29 @@ This will load in the provider data from the files generated via the generator (
 
 ```ruby
 provider_builder = OauthAssist::Provider::Builder.new my_providers
+
+# load certificates 
+provider_builder.certificates
+
 provider_builder.configure_providers
 ```
+
+Note: To use certificates you need a file named ca-bundle.crt to be put into the config directory of your application. (fx from http://certifie.com/ca-bundle)
+
+Bote: You can pass a path argument to `#certificates` to override the default location of the crt file.
 
 ## View helpers and localization
 
 The gem now takes the form of an engine and includes a basic signup view in both `ERB` and `HAML` formats. You can use this view as a base to suit your own needs.
+
+
+## Assets
+
+The engine now also includes a basic stylesheet under `lib/assets/stylesheets/oauth_services.css`.
+
+The images used are included under `lib/assets/images`
+
+You can also use the social icon sprites from the gem [social_icons](https://github.com/kristianmandrup/social_icons) as an alternative.
 
 ## Important notice
 
