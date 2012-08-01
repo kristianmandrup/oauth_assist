@@ -1,11 +1,52 @@
-module OauthAssist::Controller
-  class MsgHandler
-    attr_accessor :flash
+class FlashMsgHandler
+  attr_accessor :flash, :options
 
-    def initialize flash
-      @flash = flash
+  def initialize flash, options
+    @flash = flash
+    @options = options
+
+    # create instance method for each msg option
+    case options
+    when Hash
+      options.each do |key, value|
+        self.class.define_method key do
+          value
+        end
+      end
+    when Array
+      options.each do |meth|
+        self.class.define_method meth do
+          send(meth)
+        end
+      end
     end
+  end
+end
 
+class NotifyMsgHandler < FlashMsgHandler
+  def notify name
+    send(name)
+  end
+end
+
+class ControllerMsgHandler < FlashMsgHandler
+  def error
+    @error ||= Error.new flash, options
+  end
+
+  def notice
+    @notice ||= Notice.new flash, options
+  end
+
+  protected
+
+  def signal msg, type = :notice
+    flash[type] = msg
+  end  
+end
+
+class ServicesMsgHandler < ControllerMsgHandler
+  class Error < NotifyMsgHandler
     def must_sign_in!
       signal 'You need to sign in before accessing this page!', :error
     end
@@ -28,9 +69,9 @@ module OauthAssist::Controller
     def auth_invalid! full_route
       signal 'Error while authenticating via ' + full_route + '. The service returned invalid data for the user id.', :error
     end
-    
-    # Notices
-
+  end
+  
+  class Notice < NotifyMsgHandler
     def already_connected provider_name
       signal 'Your account at ' + provider_name + ' is already connected with this site.', :notice
     end
@@ -49,12 +90,6 @@ module OauthAssist::Controller
 
     def signed_out!
       signal 'You have been signed out!', :notice
-    end
-
-    protected
-
-    def signal msg, type = :notice
-      flash[type] = msg
     end
   end
 end

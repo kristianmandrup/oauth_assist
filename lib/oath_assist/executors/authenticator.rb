@@ -1,22 +1,20 @@
-Authenticator < Executor
-  def initialize controller
-  end
+require 'oauth_assist/executors/executor'
 
+class Authenticator < Executor
   def execute
-    valid_auth_params? ? error.execute : success.execute
+    valid_auth_params? ? valid_auth.execute : invalid_auth.execute
   end
 
-  def error
-    Error.new(controller)
+  def invalid_auth
+    InvalidAuth.new(controller)
   end
 
-  def success
-    Success.new(controller)
+  def valid_auth
+    ValidAuth.new(controller)
   end
 
-  class Error < Executor
-    def execute
-      msg.auth_error! service_name
+  class InValidAuth < Executor
+    def execute      
       :error
     end
   end

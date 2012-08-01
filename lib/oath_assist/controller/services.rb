@@ -31,27 +31,56 @@ module OauthAssist::Controller
     # This handles signing in and adding an authentication service to existing accounts itself
     # It renders a separate view if there is a new user to create
     def create    
-      # continue only if hash and parameter exist
-      valid_auth_params? ? handle_auth : handle_auth_error
-    end
-
-    def create    
       case Authenticator.new(self).execute
       when :no_auth
-        render :text => omniauth.to_yaml if 
+        do_render :text => omniauth.to_yaml if 
       when :error, :invalid, :auth_error
-        redirect_to signin_path
+        do_redirect signin_path
       when :signed_in_con, :signed_in_new_con
-        redirect_to services_path
+        do_redirect services_path
       when :signed_in_user
         redirect_to root_url
       when :signed_in_new_user
-        render signup_services_path
+        do_render signup_services_path
       else
-        redirect_to root_url
+        do_redirect root_url
       end
     end
+
+    protected
+
+    # Alternative
+    # def msg_options
+    #   {service_name: service_name, full_route: full_route, provider_name: provider_name}
+    # end
+
+    def msg_options
+      [:service_name, :full_route, :provider_name]
+    end
+
+
+    def do_redirect path
+      notify!
+      redirect_to path
+    end
+
+    def do_render path
+      notify!
+      render path
+    end
+
+    attr_accessor :messages
+
+    def add_msg txt, type = :notify
+      messages << Hashie::Mash.new {txt: txt, type: type}
+    end
     
+    def notify!
+      messages.each do |message|
+        msg_handler.send(message.type).notify(message.txt, msg_options)
+      end
+    end
+
     # callback: failure
     def failure
       msg.auth_service_error!      
@@ -60,7 +89,7 @@ module OauthAssist::Controller
 
     protected
 
-    def msg
+    def msg_handler
       @msg_handler ||= OauthAssist::MsgHandler.new flash
     end
 
