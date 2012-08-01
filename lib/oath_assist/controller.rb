@@ -9,7 +9,7 @@ module OauthAssist
   end
 end
 
-require 'oath_assist/controller/auth_helper'
-require 'oath_assist/controller/msg_handler'
-require 'oath_assist/controller/services_controller'
+require 'oauth_assist/controller/auth_helper'
+require 'oauth_assist/controller/msg_handler'
+require 'oauth_assist/controller/services_controller'
 

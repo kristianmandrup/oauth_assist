@@ -14,8 +14,8 @@ require 'rake'
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "oath_assist"
-  gem.homepage = "http://github.com/kristianmandrup/oath_assist"
+  gem.name = "oauth_assist"
+  gem.homepage = "http://github.com/kristianmandrup/oauth_assist"
   gem.license = "MIT"
   gem.summary = %Q{Helper modules for setting up Oauth in Rails 3 with Users having multiple Oauth service providers}
   gem.description = %Q{Based on the code in http://www.communityguides.eu/articles/16 but heavily refactored}
@@ -43,7 +43,7 @@ Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "oath_assist #{version}"
+  rdoc.title = "oauth_assist #{version}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end

@@ -34,6 +34,23 @@ module OauthAssist::Controller
       # continue only if hash and parameter exist
       valid_auth_params? ? handle_auth : handle_auth_error
     end
+
+    def create    
+      case Authenticator.new(self).execute
+      when :no_auth
+        render :text => omniauth.to_yaml if 
+      when :error, :invalid, :auth_error
+        redirect_to signin_path
+      when :signed_in_con, :signed_in_new_con
+        redirect_to services_path
+      when :signed_in_user
+        redirect_to root_url
+      when :signed_in_new_user
+        render signup_services_path
+      else
+        redirect_to root_url
+      end
+    end
     
     # callback: failure
     def failure

@@ -4,7 +4,7 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = "oath_assist"
+  s.name = "oauth_assist"
   s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
@@ -31,28 +31,28 @@ Gem::Specification.new do |s|
     "lib/generators/oauth_providers_generator.rb",
     "lib/generators/templates/openid_providers.yml",
     "lib/generators/templates/providers.yml",
-    "lib/oath_assist.rb",
-    "lib/oath_assist/controller.rb",
-    "lib/oath_assist/controller/account_helper.rb",
-    "lib/oath_assist/controller/auth_helper.rb",
-    "lib/oath_assist/controller/msg_handler.rb",
-    "lib/oath_assist/controller/services.rb",
-    "lib/oath_assist/controller/user_helper.rb",
-    "lib/oath_assist/controller/user_session_helper.rb",
-    "lib/oath_assist/data/extractor.rb",
-    "lib/oath_assist/engine.rb",
-    "lib/oath_assist/extensions/omniauth_builder.rb",
-    "lib/oath_assist/provider.rb",
-    "lib/oath_assist/provider/builder.rb",
-    "lib/oath_assist/provider/loader.rb",
-    "lib/oath_assist/session_config.rb",
-    "lib/oath_assist/view.rb",
-    "lib/oath_assist/view/services.rb",
-    "lib/oath_assist/view/session.rb",
-    "spec/oath_assist_spec.rb",
+    "lib/oauth_assist.rb",
+    "lib/oauth_assist/controller.rb",
+    "lib/oauth_assist/controller/account_helper.rb",
+    "lib/oauth_assist/controller/auth_helper.rb",
+    "lib/oauth_assist/controller/msg_handler.rb",
+    "lib/oauth_assist/controller/services.rb",
+    "lib/oauth_assist/controller/user_helper.rb",
+    "lib/oauth_assist/controller/user_session_helper.rb",
+    "lib/oauth_assist/data/extractor.rb",
+    "lib/oauth_assist/engine.rb",
+    "lib/oauth_assist/extensions/omniauth_builder.rb",
+    "lib/oauth_assist/provider.rb",
+    "lib/oauth_assist/provider/builder.rb",
+    "lib/oauth_assist/provider/loader.rb",
+    "lib/oauth_assist/session_config.rb",
+    "lib/oauth_assist/view.rb",
+    "lib/oauth_assist/view/services.rb",
+    "lib/oauth_assist/view/session.rb",
+    "spec/oauth_assist_spec.rb",
     "spec/spec_helper.rb"
   ]
-  s.homepage = "http://github.com/kristianmandrup/oath_assist"
+  s.homepage = "http://github.com/kristianmandrup/oauth_assist"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
   s.rubygems_version = "1.8.24"

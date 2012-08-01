@@ -1,4 +1,4 @@
-# Oath assist
+# Oauth assist
 
 Assists in setting up Rails 3 project with Oath and multiple service providers
 
@@ -8,7 +8,7 @@ I was however unsatisfied with the code structure (too much bloat) and wanted to
 
 ## Usage
 
-`gem 'oath_assist'`
+`gem 'oauth_assist'`
 
 ## Controller setup
 
@@ -112,7 +112,7 @@ This gem has not yet been tested and currently has no specs (test cases). Please
 
 Thanks!
 
-## Contributing to oath_assist
+## Contributing to oauth_assist
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it.

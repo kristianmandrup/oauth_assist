@@ -1,4 +1,4 @@
-require 'oath_assist/controller/account_helper'
+require 'oauth_assist/controller/account_helper'
 
 module OauthAssist::Controller
   module UserSessionHelper

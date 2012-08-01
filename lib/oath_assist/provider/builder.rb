@@ -1,4 +1,4 @@
-require 'oath_assist/extensions/omniauth_builder'
+require 'oauth_assist/extensions/omniauth_builder'
 
 module OauthAssist
   module Provider
