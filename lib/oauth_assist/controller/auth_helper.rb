@@ -1,8 +1,10 @@
 require 'oauth_assist/controller/user_session_helper'
 
 module OauthAssist::Controller
-  module AuthHelper
-    include OauthAssist::Controller::UserSessionHelper
+  module AuthHelper    
+    def service
+      params[:service]
+    end
 
     # map the returned hashes to our variables first - the hashes differs for every service
     def auth_hash 

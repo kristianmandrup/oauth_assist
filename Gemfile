@@ -3,10 +3,9 @@ source :rubygems
 # to load provider data from yml files
 gem 'rails_config_loader',  '~> 0.1.2'
 
+gem 'controll', :git => 'git@github.com:kristianmandrup/controll.git'
 gem 'imperator'
-
-# TODO
-# gem 'focused_controller'
+gem 'focused_controller'
 
 group :development do
   gem "rspec",    ">= 2.8.0"

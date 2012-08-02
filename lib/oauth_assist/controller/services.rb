@@ -1,4 +1,5 @@
 require 'oauth_assist/message_handler/services'
+require 'oauth_assist/flow_handler/create_service'
 
 module OauthAssist::Controller
   module Services
@@ -33,28 +34,23 @@ module OauthAssist::Controller
     # This handles signing in and adding an authentication service to existing accounts itself
     # It renders a separate view if there is a new user to create
     def create    
-      case Authenticator.new(self).execute
-      when :no_auth
-        do_render :text => omniauth.to_yaml 
-      when :error, :invalid, :auth_error
-        do_redirect signin_path
-      when :signed_in_connect, :signed_in_new_connect
-        do_redirect services_path
-      when :signed_in_user
-        redirect_to root_url
-      when :signed_in_new_user
-        do_render signup_services_path
-      else
-        do_redirect root_url
-      end
+      FlowHandler::CreateService.new(self).execute
     end
 
     protected
 
+    # see 'controll' gem
+    include Controll::Helper
+
+    def msg_handler
+      @msg_handler ||= OauthAssist::MsgHandler::Services.new flash, msg_options
+    end        
+
+    # register commands with controller
+
     def cancel_commit_command
       @cancel_commit_command ||= CancelCommitCommand.new initiator: self
     end    
-
 
     def create_account_command
       @create_account_command ||= CreateAccountCommand.new
@@ -64,10 +60,7 @@ module OauthAssist::Controller
       @signout_command ||= SignoutCommand.new current_user
     end
 
-    include OauthAssist::Controller::Messaging
-    include MessageHandler::Services
-
-    # Alternative
+    # Alternative define:
     # def msg_options
     #   {service_name: service_name, full_route: full_route, provider_name: provider_name}
     # end
@@ -76,20 +69,10 @@ module OauthAssist::Controller
       [:service_name, :full_route, :provider_name]
     end
 
-    def do_redirect path
-      notify!
-      redirect_to path
-    end
-
-    def do_render path
-      notify!
-      render path
-    end
-
     # callback: failure
     def failure
-      msg.auth_service_error!      
-      redirect_to root_url
+      notify :auth_service_error
+      do_redirect root_url
     end
 
     def accessible_actions
