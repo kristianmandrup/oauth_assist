@@ -1,3 +1,5 @@
+require 'oauth_assist/message_handler/services'
+
 module OauthAssist::Controller
   module Services
     before_filter :authenticate_user!, :except => accessible_actions
@@ -11,19 +13,19 @@ module OauthAssist::Controller
     # POST to remove an authentication service
     def destroy
       # remove an authentication service linked to the current user    
-      matching_service_account?(current_user_service.id) ? msg.cant_delete_current_account! : current_user_service.destroy    
-      redirect_to services_path
+      matching_service_account?(current_user_service.id) ? notify(:cant_delete_current_account) : current_user_service.destroy    
+      do_redirect services_path
     end
 
     # POST from signup view
     def newaccount
       cancel_commit and return if params[:commit] == "Cancel" ?
-      create_account
+      create_account_command.perform
     end  
     
     # Sign out current user
     def signout 
-      signout_user if current_user
+      signout_command.perform if current_user
       redirect_to root_url
     end
     
@@ -33,10 +35,10 @@ module OauthAssist::Controller
     def create    
       case Authenticator.new(self).execute
       when :no_auth
-        do_render :text => omniauth.to_yaml if 
+        do_render :text => omniauth.to_yaml 
       when :error, :invalid, :auth_error
         do_redirect signin_path
-      when :signed_in_con, :signed_in_new_con
+      when :signed_in_connect, :signed_in_new_connect
         do_redirect services_path
       when :signed_in_user
         redirect_to root_url
@@ -49,6 +51,22 @@ module OauthAssist::Controller
 
     protected
 
+    def cancel_commit_command
+      @cancel_commit_command ||= CancelCommitCommand.new initiator: self
+    end    
+
+
+    def create_account_command
+      @create_account_command ||= CreateAccountCommand.new
+    end
+
+    def signout_command
+      @signout_command ||= SignoutCommand.new current_user
+    end
+
+    include OauthAssist::Controller::Messaging
+    include MessageHandler::Services
+
     # Alternative
     # def msg_options
     #   {service_name: service_name, full_route: full_route, provider_name: provider_name}
@@ -57,7 +75,6 @@ module OauthAssist::Controller
     def msg_options
       [:service_name, :full_route, :provider_name]
     end
-
 
     def do_redirect path
       notify!
@@ -69,28 +86,10 @@ module OauthAssist::Controller
       render path
     end
 
-    attr_accessor :messages
-
-    def add_msg txt, type = :notify
-      messages << Hashie::Mash.new {txt: txt, type: type}
-    end
-    
-    def notify!
-      messages.each do |message|
-        msg_handler.send(message.type).notify(message.txt, msg_options)
-      end
-    end
-
     # callback: failure
     def failure
       msg.auth_service_error!      
       redirect_to root_url
-    end
-
-    protected
-
-    def msg_handler
-      @msg_handler ||= OauthAssist::MsgHandler.new flash
     end
 
     def accessible_actions
@@ -105,19 +104,9 @@ module OauthAssist::Controller
       @current_user_service ||= current_user.services.find(params[:id])
     end
 
-    def cancel_commit
-      session[:authhash] = nil
-      session.delete :authhash
-      redirect_to root_url
-    end    
-
     # get the service parameter from the Rails router
     def service_route
       @service_route ||= params[:service] || 'No service recognized (invalid callback)'
-    end
-
-    def valid_auth_params?
-      omniauth and params[:service]
     end
   end
 end

@@ -4,15 +4,9 @@ module OauthAssist::Controller
   module AuthHelper
     include OauthAssist::Controller::UserSessionHelper
 
-    def handle_auth
-      # debug to output the hash that has been returned when adding new services
-      render :text => omniauth.to_yaml and return if !authhash    
-      auth_valid? ? handle_auth_token : handle_auth_invalid                
-    end    
-
     # map the returned hashes to our variables first - the hashes differs for every service
-    def authhash 
-      @authhash ||= extract_from omniauth
+    def auth_hash 
+      @auth_hash ||= extract_from omniauth
     end
 
     def data_extractor
@@ -20,11 +14,11 @@ module OauthAssist::Controller
     end
 
     def uid
-      authhash[:uid]
+      auth_hash[:uid]
     end
 
     def provider
-      authhash[:provider]
+      auth_hash[:provider]
     end
 
     def provider_name
@@ -38,21 +32,6 @@ module OauthAssist::Controller
     def full_route
       service_route + '/' + provider_name
     end
-
-    def handle_auth_error
-      msg.auth_error! service_name
-      redirect_to signin_path
-    end
-
-    def handle_auth_token
-      # if the user is currently signed in, he/she might want to add another account to signin
-      user_signed_in? ? user_signed_in(auth) : user_not_signed_in(auth)
-    end    
-
-    def handle_auth_invalid
-      msg.auth_invalid! full_route
-      redirect_to signin_path
-    end    
 
     def auth
       @auth ||= service_class.where(provider: provider, uid: uid).first

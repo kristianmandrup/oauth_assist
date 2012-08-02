@@ -1,11 +1,11 @@
 class Executor
-  attr_accessor :controller
+  attr_accessor :initiator
 
-  def initialize controller
-    @controller = controller
+  def initialize initiator
+    @initiator = initiator
   end
 
-  def method_missing *args
-    # send to controller
+  def method_missing(meth, *args, &block)
+    initiator.send(meth, *args, &block)
   end
 end
