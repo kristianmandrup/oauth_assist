@@ -10,6 +10,9 @@ module OauthAssist
       include OauthAssist::Controller::Services
       include OauthAssist::Controller::AuthHelper
       include OauthAssist::Controller::UserHelper
+
+      # TODO: move to `controll` gem for reuse!
+      commands.each {|command| command_method command}
     end
   end
 end

@@ -16,10 +16,6 @@ module Executor
 
     def valid_params?
       omniauth and service and auth_hash
-    end  
-
-    def sign_in_command
-      SignInCommand.new auth: auth, auth_hash: auth_hash, user_id: user_id, service_id: service_id, service_hash: service_hash, executor: self
     end
   end
 end

@@ -43,21 +43,19 @@ module OauthAssist::Controller
     include Controll::Helper
 
     def msg_handler
-      @msg_handler ||= OauthAssist::MsgHandler::Services.new flash, msg_options
+      @msg_handler ||= MessageHandler::Services.new self
     end        
 
     # register commands with controller
 
-    def cancel_commit_command
-      @cancel_commit_command ||= CancelCommitCommand.new initiator: self
-    end    
+    # TODO: Looks like a pattern to be exploited!
 
-    def create_account_command
-      @create_account_command ||= CreateAccountCommand.new
+    def self.commands
+      [:cancel_commit, :create_account, :signout]
     end
 
-    def signout_command
-      @signout_command ||= SignoutCommand.new current_user
+    def sign_in_command
+      @sign_in_command ||= SignInCommand.new auth_hash: auth_hash, user_id: user_id, service_id: service_id, service_hash: service_hash, initiator: self
     end
 
     # Alternative define:

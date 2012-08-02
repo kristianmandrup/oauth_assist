@@ -1,6 +1,3 @@
-require 'oauth_assist/message_handler/notify'
-require 'oauth_assist/message_handler/typed'
-
 module MessageHandler
   class Services < Typed
     class ErrorMsg < MessageHandler::Notify
