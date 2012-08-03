@@ -1,9 +1,7 @@
-class SignInCommand < Imperator::Command
-  class SignedIn < Executor
-    def initialize initiator
-      @initiator = initiator
-    end
+require 'oauth_assist/commands/base'
 
+class SignInCommand < Imperator::Command
+  class SignedIn < Base
     def execute
       auth ? user_signed_in_and_connected : user_signed_in_connect_new
     end
@@ -11,14 +9,6 @@ class SignInCommand < Imperator::Command
     protected
 
     delegate :provider, :uid, to: :initiator
-
-    def auth
-      @auth ||= service_class.where(provider: provider, uid: uid).first
-    end
-
-    def service_class
-      Service
-    end    
 
     def user_signed_in_and_connected
       notify :already_connected

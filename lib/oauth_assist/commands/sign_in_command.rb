@@ -13,13 +13,7 @@ class SignInCommand < SessionCommand
 
   protected
 
-  def uid
-    auth_hash[:uid]
-  end
-
-  def provider
-    auth_hash[:provider]
-  end
+  delegate :provider, :uid, to: :initiator
 
   def signed_in 
     @signed_in ||= SignedIn.new(self).perform

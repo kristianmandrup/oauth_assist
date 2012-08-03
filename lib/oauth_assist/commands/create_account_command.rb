@@ -8,13 +8,12 @@ class CreateAccountCommand < SessionCommand
 
   protected
 
-  def sign_in_new_user
-    sign_in_command.perform
-    notify :account_created
-  end
+  hash_access_methods :authhash, hash: :session
+  hash_access_methods :name, :email, :provider, :uid, hash: :authhash
 
-  def sign_in_command
-    @sign_in_command ||= SignInCommand.new user_id: newuser.id, service_id: newuser.services.first.id
+  def sign_in_new_user
+    command! :sign_in
+    notify :account_created
   end
 
   def newuser
@@ -22,9 +21,9 @@ class CreateAccountCommand < SessionCommand
   end    
 
   def create_user
-    user        = user_class.new
-    user.name   = session[:authhash][:name]
-    user.email  = session[:authhash][:email]
+    user        = User.new
+    user.name   = name
+    user.email  = email
 
     user.services.build user_service_hash
     user
@@ -32,14 +31,10 @@ class CreateAccountCommand < SessionCommand
 
   def user_service_hash
     {
-      :provider => session[:authhash][:provider], 
-      :uid      => session[:authhash][:uid], 
-      :uname    => session[:authhash][:name], 
-      :uemail   => session[:authhash][:email]
+      :provider => provider, 
+      :uid      => uid, 
+      :uname    => name, 
+      :uemail   => email
     }
   end
-
-  def user_class
-    User
-  end  
 end

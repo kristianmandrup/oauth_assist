@@ -30,7 +30,7 @@ module FlowHandler
 
     class Redirect < FlowHandler::Render
       def self.redirections
-        {        
+        {          
           signup_services_path: :signed_in_new_user
           services_path:        [:signed_in_connect, :signed_in_new_connect]
           root_url:             [:signed_in_user, :other]

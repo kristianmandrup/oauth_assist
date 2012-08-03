@@ -1,5 +1,7 @@
+require 'oauth_assist/commands/base'
+
 class SignInCommand < Imperator::Command
-  class SignedOut < Executor
+  class SignedOut < Base
     def execute
       auth ? sign_in_existing_user : sign_in_new_user
     end
@@ -7,8 +9,8 @@ class SignInCommand < Imperator::Command
     def sign_in_existing_user
       # signin existing user
       # in the session his user id and the service id used for signing in is stored
-      session[:user_id] = user_id
-      session[:service_id] = service_id
+      session[:user_id]     = user_id
+      session[:service_id]  = service_id
     
       notify :signed_in_existing_user      
     end

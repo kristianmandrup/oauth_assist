@@ -4,11 +4,15 @@ module Executor
       error(:error) and return unless valid_params?
       error(:auth_invalid) and return unless auth_valid?
 
-      sign_in_command.perform
+      command! :sign_in
       result      
     end
 
     protected
+
+    def auth_valid?
+      uid != '' and provider != ''
+    end
 
     def valid_params?
       omniauth and service and auth_hash

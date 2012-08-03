@@ -1,6 +1,21 @@
 module MessageHandler
   class Services < Typed
-    class ErrorMsg < MessageHandler::Notify
+    class Base < MessageHandler::Notify
+      def provider_name
+        provider.capitalize
+      end
+
+      def service_name
+        service_route.capitalize
+      end
+
+      def full_route
+        service_route + '/' + provider_name
+      end
+    end
+
+
+    class ErrorMsg < Base
       type :error
 
       def messages
@@ -25,7 +40,7 @@ You have not been signed in.},
     end
 
 
-    class NoticeMsg < MessageHandler::Notify
+    class NoticeMsg < Base
       type :notice
 
       # for :signed_in and :signed_out - defined in locale file under:
