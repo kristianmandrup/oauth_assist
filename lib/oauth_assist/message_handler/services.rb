@@ -3,7 +3,7 @@ module MessageHandler
     class ErrorMsg < MessageHandler::Notify
       type :error
 
-      def msg_map
+      def messages
         {
           must_sign_in: 'You need to sign in before accessing this page!',
           

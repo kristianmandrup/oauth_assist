@@ -1,5 +1,5 @@
 module Executor
-  class Authenticator < Base
+  class Authenticator < Notificator
     def execute
       error(:error) and return unless valid_params?
       error(:auth_invalid) and return unless auth_valid?
@@ -9,10 +9,6 @@ module Executor
     end
 
     protected
-
-    def result
-      notifications.last || :success # return last notification as result
-    end
 
     def valid_params?
       omniauth and service and auth_hash

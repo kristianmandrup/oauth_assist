@@ -11,7 +11,11 @@ module FlowHandler
     end
 
     def event
-      @event ||= Authenticator.new(controller).execute
+      @event ||= authentication
+    end
+
+    def authentication
+      @authentication ||= Authenticator.new(controller).execute
     end
 
     class Render < FlowHandler::Render
@@ -25,12 +29,17 @@ module FlowHandler
     end
 
     class Redirect < FlowHandler::Render
-      def self.redirect_map
-        {
-          signin_path:          [:error, :invalid, :auth_error]
+      def self.redirections
+        {        
           signup_services_path: :signed_in_new_user
           services_path:        [:signed_in_connect, :signed_in_new_connect]
           root_url:             [:signed_in_user, :other]
+        }
+      end
+
+      def self.error_redirections
+        {
+          signin_path:          [:error, :invalid, :auth_error]
         }
       end
     end
