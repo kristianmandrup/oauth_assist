@@ -1,8 +1,8 @@
 module Executor
   class Authenticator < Base
     def execute
-      notify(:error) and return unless valid_params?
-      notify(:auth_invalid) and return unless auth_valid?
+      error(:error) and return unless valid_params?
+      error(:auth_invalid) and return unless auth_valid?
 
       sign_in_command.perform
       result      

@@ -42,17 +42,12 @@ module OauthAssist::Controller
     # see 'controll' gem
     include Controll::Helper
 
+    # register commands with controller
+    commands :cancel_commit, :create_account, :signout
+
     def msg_handler
       @msg_handler ||= MessageHandler::Services.new self
     end        
-
-    # register commands with controller
-
-    # TODO: Looks like a pattern to be exploited!
-
-    def self.commands
-      [:cancel_commit, :create_account, :signout]
-    end
 
     def sign_in_command
       @sign_in_command ||= SignInCommand.new auth_hash: auth_hash, user_id: user_id, service_id: service_id, service_hash: service_hash, initiator: self
@@ -69,7 +64,7 @@ module OauthAssist::Controller
 
     # callback: failure
     def failure
-      notify :auth_service_error
+      error :auth_service_error
       do_redirect root_url
     end
 

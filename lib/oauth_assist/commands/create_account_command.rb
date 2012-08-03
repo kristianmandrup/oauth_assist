@@ -3,7 +3,7 @@ require 'oauth_assist/commands/session_command'
 class CreateAccountCommand < SessionCommand
   action do
     sign_in_new_user and return if newuser.save!
-    notify :account_error
+    error :account_error
   end
 
   protected
